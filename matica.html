@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<body>
+    <h3 id='header'>click for start</h3>
+    <button onclick="calculation_of_deteminant()" >
+      click me!
+    </button>
+    <h4>Values of determinant are</h4>
+    <p id="process"></p>
+    <p id="info"></p>
+    <h4>Results for x,y,z</h4>
+    <p id="info1"></p>
+    <script>
+      //initial values which can be changed
+      //we need alues for 3*3 matric, meaning 3 x values, 3 y values, 3 z values
+        const z = [];
+        let z1 = -1000;
+        let z2 = +1000;
+        let z3 = -1;
+        z.push(z1,z2,z3);
+
+        const y = [];
+        let y1 = 0;
+        let y2 = 250;
+        let y3 = 1;
+        y.push(y1,y2,y3);
+        
+        const x = [];
+        let x1 = -500;
+        let x2 = 0;
+        let x3 = 1;
+        x.push(x1,x2,x3);
+
+        const l = [];
+        let l1 = -10;
+        let l2 = 15;
+        let l3 = 0;
+        l.push(l1,l2,l3);
+        //in practice this program can be used to calculate amperage of electrical circuits
+        //to achieve that we have to first get to the equations that are in the form:
+        // x1 + y1 +z1 = 4
+        // x2 + y2 +z2 = 7
+        // x3 + y3 +z3 = 19
+        //this system of linear equations can be solved using algothitm below
+        //we get this system for electrical circuit using Kirhof's laws where 
+        //x,y,z variables are for the current in the form R*I (Ohms law) where R is known value
+
+
+        function calculation_of_deteminant(){
+          //using Sarus rule we first calculate determinant of the main matrix
+          // this is done by multipliing the main diagonal, lower digonal and diagonal below and the adding them together
+          // then substracting results of the same opperations applies to opposite diagonals 
+            let d = (x[0]*y[1]*z[2] + y[0]*z[1]*x[2] + z[0]*x[1]*y[2]) - (x[2]*y[1]*z[0] + y[2]*z[1]*x[0] + z[2]*x[1]*y[0]);
+          // then we replace x collum values with the resuls of the system of linear equations (in example above it would be 4,7,19)
+          //so the example ebove would look like 4 + y1 + z1
+          //                                     7 + y2 + z2
+          //                                    19 + y3 + z3
+          //and we reapeat the process of calculating the determinant for new MATRIX
+            let dx = (l[0]*y[1]*z[2] + y[0]*z[1]*l[2] + z[0]*l[1]*y[2]) - (l[2]*y[1]*z[0] + y[2]*z[1]*l[0] + z[2]*l[1]*y[0]);
+           //next we replace the y collum in the initial matrix with results of the initial matrix 
+           //and we again calculate determinant of this matrix
+           //result will be dx (deteerminant of matrix with replaced x collum)
+            let dy = (x[0]*l[1]*z[2] + l[0]*z[1]*x[2] + z[0]*x[1]*l[2]) - (x[2]*l[1]*z[0] + l[2]*z[1]*x[0] + z[2]*x[1]*l[0]);
+            //last we calculate determinant of z collum matrix with the same process as above
+            //result will be dy (deteerminant of matrix with replaced y collum)
+            let dz = (x[0]*y[1]*l[2] + y[0]*l[1]*x[2] + l[0]*x[1]*y[2]) - (x[2]*y[1]*l[0] + y[2]*l[1]*x[0] + l[2]*x[1]*y[0]);
+           //result will be dz (deteerminant of matrix with replaced z collum)
+           //we can do those operations because they are linear(they move on a straight line)
+           //we would get to the same matrices by appliing mathematical operation like multipling the tho whole
+           //row with one element etc.
+            //now we just need to divide calculated determinant with the determinant of the initial matrix
+            //and display the results 
+           document.getElementById("process").innerHTML = "x = " +dx/d+ "y = " +dy/d+ "z = " +dz/d; 
+            
+            let result_of_x = dx/d;
+            let result_of_y = dy/d;
+            let result_of_z = dz/d;
+            
+            document.getElementById("info1").innerHTML = "x is " + result_of_x + " y is " + result_of_y + " z is " + result_of_z;
+
+                
+            }
+        
+    </script>
+    
+
+</body>
+
+
+</html>
